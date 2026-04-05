@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a user in the system (client or admin).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "telefone": { "type": "string" },
+        "tipo": { "type": "string", "enum": ["cliente", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "nome", "telefone", "tipo"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Represents a barber service.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nome": { "type": "string" },
+        "categoria": { "type": "string", "enum": ["CORTES", "BARBA", "DESIGN", "SOBRANCELHA", "ESTÉTICA", "QUÍMICA"] },
+        "preco": { "type": "number" },
+        "ativo": { "type": "boolean" }
+      },
+      "required": ["id", "nome", "categoria", "preco", "ativo"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Represents a scheduled appointment.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userPhone": { "type": "string" },
+        "serviceId": { "type": "string" },
+        "serviceName": { "type": "string" },
+        "servicePrice": { "type": "number" },
+        "data": { "type": "string", "format": "date" },
+        "hora": { "type": "string" },
+        "status": { "type": "string", "enum": ["pendente", "confirmado", "cancelado"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "serviceId", "data", "hora", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles."
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Available services."
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Scheduled appointments."
+    }
+  }
+}
